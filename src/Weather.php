@@ -1,8 +1,15 @@
 <?php
 
+/*
+ * This file is part of the stabunkow/weather.
+ *
+ * (c) stabunkow <stabunkow@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
 
 namespace Stabunkow\Weather;
-
 
 use GuzzleHttp\Client;
 use Stabunkow\Weather\Exceptions\InvalidArgumentException;
@@ -11,6 +18,7 @@ use Stabunkow\Weather\Exceptions\HttpException;
 class Weather
 {
     protected $key;
+
     protected $guzzleOptions = [];
 
     public function __construct($key)
@@ -34,11 +42,11 @@ class Weather
 
         // 1. 对 `$format` 与 `$type` 参数进行检查，不在范围内的抛出异常。
         if (!\in_array($format, ['xml', 'json'])) {
-            throw new InvalidArgumentException('Invalid response format: ' . $format);
+            throw new InvalidArgumentException('Invalid response format: '.$format);
         }
 
         if (!\in_array(\strtolower($type), ['base', 'all'])) {
-            throw new InvalidArgumentException('Invalid type value(base/all): ' . $type);
+            throw new InvalidArgumentException('Invalid type value(base/all): '.$type);
         }
 
         // 2. 封装 query 参数，并对空值进行过滤。
@@ -46,14 +54,14 @@ class Weather
             'key' => $this->key,
             'city' => $city,
             'output' => $format,
-            'extensions' => $type
+            'extensions' => $type,
         ]);
 
         try {
             // 3. 调用 getHttpClient 获取实例，并调用该实例的 `get` 方法，
             // 传递参数为两个：$url、['query' => $query]，
             $response = $this->getHttpClient()->get($url, [
-                'query' => $query
+                'query' => $query,
             ])->getBody()->getContents();
 
             // 4. 返回值根据 $format 返回不同的格式，

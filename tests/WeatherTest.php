@@ -1,5 +1,14 @@
 <?php
 
+/*
+ * This file is part of the stabunkow/weather.
+ *
+ * (c) stabunkow <stabunkow@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace Stabunkow\Weather\Tests;
 
 use GuzzleHttp\Client;
@@ -10,7 +19,6 @@ use Stabunkow\Weather\Exceptions\HttpException;
 use Stabunkow\Weather\Exceptions\InvalidArgumentException;
 use Stabunkow\Weather\Weather;
 use PHPUnit\Framework\TestCase;
-
 
 class WeatherTest extends TestCase
 {
@@ -64,7 +72,7 @@ class WeatherTest extends TestCase
                 'city' => '深圳',
                 'output' => 'json',
                 'extensions' => 'base',
-            ]
+            ],
         ])->andReturn($response);
 
         $w = \Mockery::mock(Weather::class, ['mock-key'])->makePartial();
